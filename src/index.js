@@ -1,4 +1,4 @@
-import { app, session, shell, nativeImage, ipcMain, BrowserWindow, Tray } from 'electron';
+import { app, session, shell, nativeImage, ipcMain, BrowserWindow, Menu, Tray } from 'electron';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -36,8 +36,34 @@ function createWindow () {
     
     win.loadURL(`${BASE_URL}?skin=${TEMPLATE}`);
     // win.webContents.openDevTools();
+    win.on("closed", function () {
+        win = null;
+    });
+
+    if ('darwin' === process.platform) {
+        // application's main menu for mac
+        var template = [{
+            label: "UNA.IO Messenger",
+            submenu: [
+                { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
+            ]}, {
+            label: "Edit",
+            submenu: [
+                { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
+                { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+                { type: "separator" },
+                { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+                { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+                { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+                { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+            ]}
+        ];
+
+        Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+    }
 
     if ('win32' === process.platform) {
+        // tray icon for windows
         tray = new Tray(__dirname + '/../res/tray.png');
         tray.setTitle('UNA.IO Messenger');
         tray.setToolTip('UNA.IO Messenger (double-click - hide, click - focus)');
@@ -67,6 +93,10 @@ ipcMain.on('message', (event, msg) => {
         if (tray)
 		    tray.setImage(__dirname + '/../res/tray.png');
     }
+});
+
+app.on("window-all-closed", function() {
+    app.quit();
 });
 
 app.on('ready', createWindow);
