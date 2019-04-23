@@ -1,6 +1,6 @@
 {
-  "name": "una-desktop",
-  "productName": "una-desktop",
+  "name": "UNAMessenger",
+  "productName": "UNAMessenger",
   "version": "1.0.0",
   "description": "una.io desktop messenger app",
   "main": "src/index.js",
@@ -14,11 +14,15 @@
   "keywords": [],
   "author": "UNA Inc",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unaio/una-desktop-app.git"
+  },
   "config": {
     "forge": {
       "make_targets": {
         "win32": [
-          "squirrel"
+          "wix"
         ],
         "darwin": [
           "dmg"
