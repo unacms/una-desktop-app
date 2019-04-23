@@ -30,7 +30,7 @@
       },
       "electronPackagerConfig": {
         "packageManager": "npm",
-        "icon": "./res/AppIcon.png"
+        "icon": "./res/AppIcon.ico"
       },
       "electronWinstallerConfig": {
         "name": "una_desktop"
