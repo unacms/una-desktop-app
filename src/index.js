@@ -37,31 +37,35 @@ function createWindow () {
     win.loadURL(`${BASE_URL}?skin=${TEMPLATE}`);
     // win.webContents.openDevTools();
 
-	tray = new Tray(__dirname + '/../res/tray.png');
-	tray.setTitle('UNA.IO Messenger');
-	tray.setToolTip('UNA.IO Messenger (double-click - hide, click - focus)');
-	tray.on('double-click', () => {
-		win.isVisible() ? win.hide() : win.show()
-	});
-	tray.on('click', () => {
-		if (win.isVisible()) {
-			win.focus();
-		} 
-		else {
-			win.show();
-			win.focus();
-		}
-	});
+    if ('win32' === process.platform) {
+        tray = new Tray(__dirname + '/../res/tray.png');
+        tray.setTitle('UNA.IO Messenger');
+        tray.setToolTip('UNA.IO Messenger (double-click - hide, click - focus)');
+        tray.on('double-click', () => {
+            win.isVisible() ? win.hide() : win.show()
+        });
+        tray.on('click', () => {
+            if (win.isVisible()) {
+                win.focus();
+            } 
+            else {
+                win.show();
+                win.focus();
+            }
+        });
+    }
 }
 
 ipcMain.on('message', (event, msg) => {    
     if (msg.bubbles && msg.bubbles['notifications-messenger'] && parseInt(msg.bubbles['notifications-messenger']) > 0) {
 		let n = parseInt(msg.bubbles['notifications-messenger']);
         app.setBadgeCount(n);
-		tray.setImage(__dirname + (n > 0 && n <= 3 ? '/../res/tray-' + n + '.png' : '/../res/tray-new.png'));
+		if (tray) 
+            tray.setImage(__dirname + (n > 0 && n <= 3 ? '/../res/tray-' + n + '.png' : '/../res/tray-new.png'));
     } else {
         app.setBadgeCount(0);
-		tray.setImage(__dirname + '/../res/tray.png');
+        if (tray)
+		    tray.setImage(__dirname + '/../res/tray.png');
     }
 });
 
