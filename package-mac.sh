@@ -1,1 +1,1 @@
-electron-forge -a x64 -p darwin package
+electron-forge -a x64 -p darwin make
