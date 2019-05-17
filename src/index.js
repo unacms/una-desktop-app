@@ -1,12 +1,22 @@
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ */
+
 import { app, session, shell, nativeImage, ipcMain, BrowserWindow, Menu, Tray } from 'electron';
+
+const BASE_URL = 'https://una.io/'; // 'http://hihi.una.io/';
+const TEMPLATE = 'protean';
+const TITLE = 'UNA.IO Messenger';
+const TRAY_TOOLTIP = 'UNA.IO Messenger (double-click - hide, click - focus)';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
     app.quit();
 }
 
-const BASE_URL = 'https://una.io/'; // 'http://hihi.una.io/'; 
-const TEMPLATE = 'protean';
+// allow to play sound by default
+app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
 
 let tray;
 let win;
@@ -40,33 +50,44 @@ function createWindow () {
         win = null;
     });
 
+
+    // application's main menu for mac
+    const menuTemplate = [{
+        label: "Edit",
+        submenu: [
+            { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
+            { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+            { type: "separator" },
+            { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+            { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+            { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+            { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+        ]}, {    
+        label: "View",
+        submenu: [                
+            { role: "zoomIn" },
+            { role: "zoomOut" },
+            { type: "separator" },
+            { role: "forceReload" },
+        ]}
+    ];
+
     if ('darwin' === process.platform) {
-        // application's main menu for mac
-        var template = [{
-            label: "UNA.IO Messenger",
+        menuTemplate.unshift({
+            label: TITLE,
             submenu: [
                 { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
-            ]}, {
-            label: "Edit",
-            submenu: [
-                { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
-                { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
-                { type: "separator" },
-                { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
-                { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
-                { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
-                { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
-            ]}
-        ];
-
-        Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+            ]
+        });
     }
+
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
 
     if ('win32' === process.platform) {
         // tray icon for windows
         tray = new Tray(__dirname + '/../res/tray.png');
-        tray.setTitle('UNA.IO Messenger');
-        tray.setToolTip('UNA.IO Messenger (double-click - hide, click - focus)');
+        tray.setTitle(TITLE);
+        tray.setToolTip(TRAY_TOOLTIP);
         tray.on('double-click', () => {
             win.isVisible() ? win.hide() : win.show()
         });
