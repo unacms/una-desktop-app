@@ -1,6 +1,6 @@
 # UNA Desktop App
 
-For the proper functionality your site must have **Nexus** app installed.
+For the proper functionality of desktop apps your site must have **Nexus** app installed.
 
 ## Rebranding
 
