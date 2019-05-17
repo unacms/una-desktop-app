@@ -1,5 +1,7 @@
 # UNA Desktop App
 
+For the proper functionality your site must have **Nexus** app installed.
+
 ## Rebranding
 
 Change the following values to your own in `src/index.js` file:
