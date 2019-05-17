@@ -19,6 +19,6 @@ Tray icons are needed for Windows only and can created using any suitable image 
 
 ## Packaging
 
-Windows build must be made on Windows - run `package-win.bat`.
+Windows build must be made on Windows - run `package-win.bat`.  
 Mac build must be made on Mac only - run `package-mac.sh`.
 
