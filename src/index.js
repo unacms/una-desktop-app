@@ -35,6 +35,7 @@ function createWindow () {
         height: 600, 
         minHeight: 480,
         icon: __dirname + '/../res/AppIcon.png', // for win and linux only
+        webPreferences: { nodeIntegration: true, contextIsolation: false }
     });
 
     // make external links to open in default browser
