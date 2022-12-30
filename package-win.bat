@@ -1,1 +1,1 @@
-electron-forge -a ia32 -p win32 make
+npm run make -- --platform=win32

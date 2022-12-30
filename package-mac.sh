@@ -1,1 +1,1 @@
-electron-forge -a x64 -p darwin make
+npm run make -- --arch=arm64,x64

@@ -3,17 +3,15 @@
  * MIT License - https://opensource.org/licenses/MIT
  */
 
-import { app, session, shell, nativeImage, ipcMain, BrowserWindow, Menu, Tray } from 'electron';
+const { app, session, shell, nativeImage, ipcMain, BrowserWindow, Menu, Tray } = require('electron')
 
-const BASE_URL = 'https://una.io/'; // 'http://hihi.una.io/';
-const TEMPLATE = 'protean';
+const BASE_URL = 'https://una.io/'; 
+const TEMPLATE = 'artificer';
 const TITLE = 'UNA.IO Messenger';
 const TRAY_TOOLTIP = 'UNA.IO Messenger (double-click - hide, click - focus)';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
-    app.quit();
-}
+if(require('electron-squirrel-startup')) return;
 
 // allow to play sound by default
 app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
@@ -31,7 +29,8 @@ function createWindow () {
     
     // create window
     win = new BrowserWindow({ 
-        width: 800, 
+        title: TITLE,
+        width: 800,
         minWidth: 320, 
         height: 600, 
         minHeight: 480,
@@ -69,6 +68,8 @@ function createWindow () {
             { role: "zoomOut" },
             { type: "separator" },
             { role: "forceReload" },
+            { type: "separator" },
+            { label: "Open Dev Tools", click: () => win.webContents.openDevTools() },
         ]}
     ];
 

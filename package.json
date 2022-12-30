@@ -1,7 +1,6 @@
 {
-  "name": "UNAMessenger",
-  "productName": "UNAMessenger",
-  "version": "1.1.0",
+  "name": "UNA Messenger",
+  "version": "2.0.0",
   "description": "una.io desktop messenger app",
   "main": "src/index.js",
   "scripts": {
@@ -11,63 +10,28 @@
     "publish": "electron-forge publish",
     "lint": "eslint src --color"
   },
-  "keywords": [],
+  "keywords": [
+    "unaio",
+    "una.io",
+    "una",
+    "messenger"
+  ],
   "author": "UNA Inc",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/unaio/una-desktop-app.git"
   },
-  "config": {
-    "forge": {
-      "make_targets": {
-        "win32": [
-          "wix"
-        ],
-        "darwin": [
-          "dmg"
-        ],
-        "linux": [
-          "deb",
-          "rpm"
-        ]
-      },
-      "electronPackagerConfig": {
-        "packageManager": "npm",
-        "icon": "./res/AppIcon.ico"
-      },
-      "electronWinstallerConfig": {
-        "name": "una_desktop"
-      },
-      "electronInstallerDMG": {
-        "icon": "./res/AppIcon.icns"
-      },
-      "electronInstallerDebian": {},
-      "electronInstallerRedhat": {},
-      "github_repository": {
-        "owner": "",
-        "name": ""
-      },
-      "windowsStoreConfig": {
-        "packageName": "",
-        "name": "unadesktop"
-      }
-    }
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.4",
+    "@electron-forge/maker-deb": "^6.0.4",
+    "@electron-forge/maker-rpm": "^6.0.4",
+    "@electron-forge/maker-squirrel": "^6.0.4",
+    "@electron-forge/maker-zip": "^6.0.4",
+    "electron": "^22.0.0"
   },
   "dependencies": {
-    "electron-compile": "^6.4.4",
+    "@electron-forge/maker-dmg": "^6.0.4",
     "electron-squirrel-startup": "^1.0.0"
-  },
-  "devDependencies": {
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "electron-forge": "^5.2.4",
-    "electron-prebuilt-compile": "4.0.0",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb": "^15.1.0",
-    "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.12.4"
   }
 }
